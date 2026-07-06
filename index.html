@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A special question just for you. Will you date me? 💖">
+    <title>“Me gustas”🌹</title>
+    <!-- Beautiful SVG Heart Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 30 C35 15, 15 35, 50 75 C85 35, 65 15, 50 30 Z' fill='%23ff4d6d' stroke='%233d0c11' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;1,400&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="bg-gradient-overlay"></div>
+
+    <!-- Music Control Button -->
+    <button class="music-toggle-btn" id="musicToggleBtn" title="Play romantic melody">
+        <span class="music-icon">🎵</span>
+    </button>
+
+    <!-- Main Card Container -->
+    <main class="main-container">
+        <!-- Welcome Screen (Shown initially) -->
+        <div class="glass-card" id="welcomeCard">
+            <div class="card-icon">👋💖</div>
+            <h1 class="card-title">Welcome! ✨</h1>
+            <p class="card-subtitle" style="margin-bottom: 20px;">Please tell me a bit about yourself... 👉👈</p>
+            
+            <form id="welcomeForm" class="form-container" onsubmit="event.preventDefault();">
+                <div class="input-group">
+                    <label for="nameInput">Your Name 🌸</label>
+                    <input type="text" id="nameInput" placeholder="Type your name..." required>
+                </div>
+                <div class="input-group">
+                    <label for="genderSelect">Your Gender ✨</label>
+                    <select id="genderSelect" required>
+                        <option value="" disabled selected>Select your gender...</option>
+                        <option value="Female">Female 👑</option>
+                        <option value="Male">Male 👔</option>
+                        <option value="Other">Other ✨</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-yes" id="startBtn" style="margin-top: 10px;">Open My Heart 💌</button>
+            </form>
+        </div>
+
+        <div class="glass-card hidden" id="questionCard">
+            <div class="stickman-container" id="stickmanContainer">
+                <svg viewBox="0 0 100 100" width="120" height="120" class="stickman-svg">
+                    <!-- Head -->
+                    <circle cx="50" cy="30" r="12" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <!-- Eyes -->
+                    <circle cx="46" cy="28" r="1.5" fill="#3d0c11" />
+                    <circle cx="54" cy="28" r="1.5" fill="#3d0c11" />
+                    <!-- Smile -->
+                    <path d="M 46 34 Q 50 37 54 34" fill="none" stroke="#3d0c11" stroke-width="2"
+                        stroke-linecap="round" />
+                    <!-- Body -->
+                    <line x1="50" y1="42" x2="50" y2="70" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                    <!-- Arms (holding a heart behind back) -->
+                    <path d="M 50 48 Q 62 50 60 62" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 50 48 Q 38 52 42 62" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <!-- Heart behind back -->
+                    <path d="M 60 62 Q 62 56 66 58 Q 70 56 70 62 Q 70 66 65 70 Q 60 66 60 62 Z" fill="#ff4d6d"
+                        stroke="#3d0c11" stroke-width="2" />
+                    <!-- Legs -->
+                    <line x1="50" y1="70" x2="40" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                    <line x1="50" y1="70" x2="60" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                </svg>
+            </div>
+            <h1 class="card-title" id="cardTitle">Will you date me? 🌹</h1>
+            <p class="card-subtitle" id="message">I've been wanting to ask you this for a while... 👉👈</p>
+
+            <div class="buttons-container">
+                <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
+                <button class="btn btn-no" id="noBtn">No 😢</button>
+            </div>
+        </div>
+
+        <!-- Victory Screen (Hidden initially) -->
+        <div class="victory-card hidden" id="victoryCard">
+            <div class="victory-header">🎉 Congrats! 🎉</div>
+            <h1 class="victory-title">You won and owned the most valuable thing in the world...</h1>
+            <h2 class="victory-highlight">My Heart! 💖👑</h2>
+
+            <div class="image-container">
+                <svg viewBox="0 0 160 120" width="100%" height="100%" class="stickman-couple-svg">
+                    <!-- Grid Background or decorative stars -->
+                    <!-- Stickman Left -->
+                    <circle cx="50" cy="45" r="12" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <circle cx="46" cy="43" r="1.5" fill="#3d0c11" />
+                    <circle cx="54" cy="43" r="1.5" fill="#3d0c11" />
+                    <path d="M 45 49 Q 50 54 55 49" fill="none" stroke="#3d0c11" stroke-width="2"
+                        stroke-linecap="round" />
+                    <line x1="50" y1="57" x2="50" y2="85" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                    <path d="M 50 63 Q 35 55 25 45" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 50 63 Q 65 72 80 65" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 50 85 Q 40 92 45 105" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 50 85 Q 58 92 52 105" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+
+                    <!-- Stickman Right -->
+                    <circle cx="110" cy="45" r="12" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <circle cx="106" cy="43" r="1.5" fill="#3d0c11" />
+                    <circle cx="114" cy="43" r="1.5" fill="#3d0c11" />
+                    <path d="M 105 49 Q 110 54 115 49" fill="none" stroke="#3d0c11" stroke-width="2"
+                        stroke-linecap="round" />
+                    <line x1="110" y1="57" x2="110" y2="85" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                    <polygon points="100,85 120,85 110,65" fill="none" stroke="#3d0c11" stroke-width="3"
+                        stroke-linejoin="round" />
+                    <path d="M 110 63 Q 95 72 80 65" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 110 63 Q 125 55 135 45" fill="none" stroke="#3d0c11" stroke-width="4"
+                        stroke-linecap="round" />
+                    <path d="M 107 85 L 102 105" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+                    <path d="M 113 85 L 118 105" stroke="#3d0c11" stroke-width="4" stroke-linecap="round" />
+
+                    <!-- Floating Heart between them -->
+                    <path
+                        d="M 80 32 Q 80 22 73 25 Q 67 22 67 32 Q 67 40 80 47 Q 93 40 93 32 Q 93 22 87 25 Q 80 22 80 32 Z"
+                        fill="#ff4d6d" stroke="#3d0c11" stroke-width="2" />
+                </svg>
+            </div>
+
+            <p class="victory-footer">I promise to cherish you forever. Let's make beautiful memories! 🌹✨</p>
+        </div>
+
+        <!-- Troll Card (For male names/genders) -->
+        <div class="glass-card hidden" id="trollCard" style="background: rgba(20, 20, 20, 0.95); border: 2px solid #ff4d6d; color: #fff; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);">
+            <div class="card-icon">🚨🚫</div>
+            <h1 class="card-title" style="color: #ff4d6d;">Hold on... 🤨</h1>
+            <p class="card-subtitle" id="trollMessage" style="color: #ffb5a7; min-height: auto;">Wait, you're a guy?! Why are you gay? 🏳️‍🌈</p>
+            
+            <div class="troll-image-container" style="width: 100%; max-width: 280px; margin: 20px 0; border: 3px solid #ff4d6d; border-radius: 15px; overflow: hidden; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <img src="assets/troll_meme.jpg" alt="Troll Meme" style="width: 100%; display: block;">
+            </div>
+            
+            <p style="font-size: 0.95rem; font-style: italic; color: #bbb;">Please close the tab and run away! 🏃‍♂️💨</p>
+        </div>
+    </main>
+
+    <!-- Background Audio -->
+    <audio id="bgAudio" src="assets/Me gustas tu - Manu Chao.webm" loop></audio>
+
+    <!-- Troll Audio -->
+    <audio id="trollAudio" src="assets/why-are-you-gay_NrNcI9N.mp3" loop></audio>
+
+    <!-- JS Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>
