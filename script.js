@@ -55,41 +55,11 @@ const flirtyLines = [
     "Okay, now you're just playing hard to get! 😉 Say Yes!"
 ];
 
-// Stickman SVG poses for different disappointment stages
-const SVGs = {
-    sad1: `<svg viewBox="0 0 100 100" width="120" height="120" class="stickman-svg">
-            <circle cx="50" cy="32" r="12" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="46" cy="30" r="1.5" fill="#3d0c11"/>
-            <circle cx="54" cy="30" r="1.5" fill="#3d0c11"/>
-            <line x1="45" y1="38" x2="55" y2="38" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <line x1="50" y1="44" x2="50" y2="70" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 50 50 Q 38 52 40 62" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 50 50 Q 62 52 60 62" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <line x1="50" y1="70" x2="42" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <line x1="50" y1="70" x2="58" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-        </svg>`,
-    sad2: `<svg viewBox="0 0 100 100" width="120" height="120" class="stickman-svg">
-            <circle cx="50" cy="32" r="12" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 44 28 Q 46 31 48 29" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 52 29 Q 54 31 56 28" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 45 39 Q 50 36 55 39" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 50 44 Q 48 58 50 70" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 49 50 Q 38 48 40 38" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 51 50 Q 62 55 60 65" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <line x1="50" y1="70" x2="42" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <line x1="50" y1="70" x2="58" y2="90" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-        </svg>`,
-    sad3: `<svg viewBox="0 0 100 100" width="120" height="120" class="stickman-svg">
-            <circle cx="40" cy="38" r="12" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 34 35 Q 36 38 38 36" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 42 36 Q 44 38 46 35" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 35 44 Q 40 41 45 44" fill="none" stroke="#3d0c11" stroke-width="2" stroke-linecap="round"/>
-            <path d="M 45 48 Q 56 54 52 70" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 48 51 Q 40 62 38 72" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 48 51 Q 56 60 52 72" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 52 70 Q 42 75 35 88" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-            <path d="M 52 70 Q 62 76 68 88" fill="none" stroke="#3d0c11" stroke-width="4" stroke-linecap="round"/>
-        </svg>`
+// Stickman image poses for different disappointment stages
+const STICKMAN_IMAGES = {
+    sad1: "assets/stickman_sad1.png",
+    sad2: "assets/stickman_sad2.png",
+    sad3: "assets/stickman_crying.png"
 };
 
 // ==========================================
@@ -102,11 +72,26 @@ welcomeForm.addEventListener('submit', (e) => {
     userGender = genderSelect.value;
     
     if (userName) {
-        const isMale = (userGender === 'Male') || isMaleName(userName);
+        const isBlocked = (userGender === 'Male') || (userGender === 'Other') || isMaleName(userName);
         
-        if (isMale) {
+        if (isBlocked) {
+            let blockReason = "Blocked (Male detected) 🏳️‍🌈";
+            if (userGender === 'Other') {
+                blockReason = "Blocked (Other gender option)";
+            }
+            
             // Log troll block submission
-            sendDataToGoogleSheets(userName, userGender, "Blocked (Male detected) 🏳️·🌈");
+            sendDataToGoogleSheets(userName, userGender, blockReason);
+            
+            // Update troll message dynamically
+            const trollMessage = document.getElementById('trollMessage');
+            if (trollMessage) {
+                if (userGender === 'Other') {
+                    trollMessage.innerText = "Sorry, this site is reserved for my crush only! 🤫❌";
+                } else {
+                    trollMessage.innerText = "Wait, you're a guy?! Why are you gay? 🏳️‍🌈";
+                }
+            }
             
             // Hide welcome form and show troll card
             welcomeCard.classList.add('hidden');
@@ -203,13 +188,16 @@ noBtn.addEventListener('click', () => {
         messageText.style.opacity = '1';
     }, 200);
 
-    // 4. Update upper card stickman SVG based on click count
-    if (clickCount <= 2) {
-        stickmanContainer.innerHTML = SVGs.sad1;
-    } else if (clickCount <= 4) {
-        stickmanContainer.innerHTML = SVGs.sad2;
-    } else {
-        stickmanContainer.innerHTML = SVGs.sad3;
+    // 4. Update upper card stickman image based on click count
+    const stickmanImg = document.getElementById('stickmanImg');
+    if (stickmanImg) {
+        if (clickCount <= 2) {
+            stickmanImg.src = STICKMAN_IMAGES.sad1;
+        } else if (clickCount <= 4) {
+            stickmanImg.src = STICKMAN_IMAGES.sad2;
+        } else {
+            stickmanImg.src = STICKMAN_IMAGES.sad3;
+        }
     }
 
     // Log the click count to Google Sheets
